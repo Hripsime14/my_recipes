@@ -1,7 +1,8 @@
-package com.example.myrecipes
+package com.example.myrecipes.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.myrecipes.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
