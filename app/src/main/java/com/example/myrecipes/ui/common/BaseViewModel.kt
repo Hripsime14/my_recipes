@@ -1,4 +1,6 @@
 package com.example.myrecipes.ui.common
 
-class BaseViewModel {
+import androidx.lifecycle.ViewModel
+
+open class BaseViewModel: ViewModel() {
 }

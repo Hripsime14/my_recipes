@@ -1,4 +1,6 @@
 package com.example.myrecipes.ui.feature.ricipes
 
-class RecipesViewModel {
+import com.example.myrecipes.ui.common.BaseViewModel
+
+class RecipesViewModel: BaseViewModel() {
 }
