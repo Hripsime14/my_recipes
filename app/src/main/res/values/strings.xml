@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MyRecipes</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title">Title</string>
+    <string name="description">Please add recipe description</string>
+    <string name="save">Save</string>
 </resources>
