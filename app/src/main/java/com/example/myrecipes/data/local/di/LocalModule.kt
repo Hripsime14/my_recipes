@@ -2,8 +2,10 @@ package com.example.myrecipes.data.local.di
 
 import androidx.room.Room
 import com.example.myrecipes.data.local.APP_DATABASE
+import com.example.myrecipes.data.local.datasource.AddRecipeLocalDataSource
 import com.example.myrecipes.data.local.datasource.RecipeDetailsLocalDataSource
 import com.example.myrecipes.data.local.datasource.RecipesLocalDataSource
+import com.example.myrecipes.data.local.datasource.datasourceimpl.AddRecipeLocalDataSourceImpl
 import com.example.myrecipes.data.local.datasource.datasourceimpl.RecipeDetailsLocalDataSourceImpl
 import com.example.myrecipes.data.local.datasource.datasourceimpl.RecipesLocalDataSourceImpl
 import com.example.myrecipes.data.local.db.AppDatabase
@@ -37,6 +39,12 @@ val localModule = module {
 
     factory<RecipeDetailsLocalDataSource> {
         RecipeDetailsLocalDataSourceImpl(
+            recipeDao = get()
+        )
+    }
+
+    factory<AddRecipeLocalDataSource> {
+        AddRecipeLocalDataSourceImpl(
             recipeDao = get()
         )
     }

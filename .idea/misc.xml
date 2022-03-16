@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/avetik.avetisyan/MyRecipes/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/avetik.avetisyan/MyRecipes/app/src/main/res/layout/fragment_add_recipe.xml" value="0.1" />
         <entry key="..\:/Users/avetik.avetisyan/MyRecipes/app/src/main/res/layout/fragment_recipes.xml" value="0.1" />
+        <entry key="..\:/Users/avetik.avetisyan/MyRecipes/app/src/main/res/layout/item_recipe.xml" value="0.22" />
       </map>
     </option>
   </component>

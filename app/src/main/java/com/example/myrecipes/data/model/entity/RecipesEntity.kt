@@ -9,7 +9,7 @@ import com.example.myrecipes.data.local.RECIPE_TABLE_NAME
 data class RecipesEntity(
     val title: String,
     val description: String,
-    val imageUri: Uri,
+//    val imageUri: Uri,
     @PrimaryKey(autoGenerate = true)
-    val id: Int
+    val id: Int = 0
 )

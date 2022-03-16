@@ -1,4 +1,8 @@
 package com.example.myrecipes.domain.usecase
 
-class AddRecipeUseCase {
+import com.example.myrecipes.data.model.entity.RecipesEntity
+
+
+interface AddRecipeUseCase {
+    suspend operator fun invoke(recipe: RecipesEntity)
 }
