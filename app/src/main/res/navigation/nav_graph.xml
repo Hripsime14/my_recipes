@@ -8,7 +8,11 @@
     <fragment
         android:id="@+id/recipeDetailsFragment"
         android:name="com.example.myrecipes.ui.feature.recipedetails.RecipeDetailsFragment"
-        android:label="Recipe Details" />
+        android:label="Recipe Details" >
+        <argument
+            android:name="recipeId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/recipesFragment"
         android:name="com.example.myrecipes.ui.feature.recipes.RecipesFragment"
@@ -16,6 +20,9 @@
         <action
             android:id="@+id/action_recipesFragment_to_addRecipeFragment"
             app:destination="@id/addRecipeFragment" />
+        <action
+            android:id="@+id/action_recipesFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeFragment"

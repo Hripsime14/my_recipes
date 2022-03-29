@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.myrecipes.databinding.ItemRecipeBinding
 
-class RecipesAdapter()
+class RecipesAdapter(private val onItemClicked: (Int) -> Unit,
+                    private val onItemLongClicked: (Int) -> Unit)
     :ListAdapter<RecipesEntity, RecipesAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -24,6 +25,13 @@ class RecipesAdapter()
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentRecipe = currentList[position]
         holder.bind(currentRecipe)
+        holder.itemView.setOnClickListener {
+            onItemClicked.invoke(currentRecipe.id)
+        }
+        holder.itemView.setOnLongClickListener {
+            onItemLongClicked.invoke(currentRecipe.id)
+            true
+        }
     }
 
     inner class ViewHolder(private val itemRecipeBinding: ItemRecipeBinding):
@@ -33,6 +41,7 @@ class RecipesAdapter()
             itemView.apply {
                 tvRecipeTitle.text = recipesEntity.title
                 tvRecipeDescription.text = recipesEntity.description
+                imgRecipeIcon.setImageURI(recipesEntity.imageUri)
             }
         }
     }

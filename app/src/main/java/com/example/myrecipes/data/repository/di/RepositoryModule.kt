@@ -17,13 +17,15 @@ val repositoryModule = module {
 
     factory<RecipeDetailsRepository> {
         RecipeDetailsRepositoryImpl(
-            get()
+            localDataSource = get(),
+            imageProviderManager = get()
         )
     }
 
     factory<AddRecipeRepository> {
         AddRecipeRepositoryImpl(
-            get()
+            localDataSource = get(),
+            imageProviderManager = get()
         )
     }
 }

@@ -1,54 +1,125 @@
 package com.example.myrecipes.ui.feature.recipedetails
 
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.myrecipes.R
+import com.example.myrecipes.data.model.entity.RecipesEntity
+import com.example.myrecipes.databinding.FragmentRecipeDetailsBinding
 import com.example.myrecipes.ui.common.BaseFragment
+import com.example.myrecipes.ui.extension.showDialog
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RecipeDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RecipeDetailsFragment : BaseFragment(R.layout.fragment_recipe_details) {
-    // TODO: Rename and change types of parameters
     override val viewModel: RecipeDetailsViewModel by viewModel()
-    private var param1: String? = null
-    private var param2: String? = null
+    private var binding: FragmentRecipeDetailsBinding? = null
+    private val args: RecipeDetailsFragmentArgs by navArgs()
+    private var recipeImgUri: Uri? = null
+    private var recipeId: Int = -1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let { viewModel.emitImageUriFromInternalStorage(it) }
+        }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        if (binding == null) {
+            binding = FragmentRecipeDetailsBinding.inflate(inflater, container, false)
+        }
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recipeId = args.recipeId
+        viewModel.getRecipeById(recipeId)
+        observeForCurrentRecipe()
+        observeForExternalStorageImageUri()
+        setListeners()
+    }
+
+    private fun observeForCurrentRecipe() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.recipeSharedFlow
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest { recipeEntity ->
+                    binding?.apply {
+                        if (recipeImgUri == null) {
+                            recipeImgUri = recipeEntity.imageUri
+                            etDescription.setText(recipeEntity.description)
+                            etTitle.setText(recipeEntity.title)
+                            imgRecipe.setImageURI(recipeImgUri)
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun observeForExternalStorageImageUri() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.externalStorageUriSharedFlow
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest { uri ->
+                    binding?.apply {
+                        uri?.let {
+                            recipeImgUri = it
+                            imgRecipe.setImageURI(it)
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun setListeners() {
+        binding?.apply {
+            imgRecipe.setOnClickListener {
+                if (isPermissionsGranted()) {
+                    getContent.launch("image/*")
+                } else {
+                    showDialog()
+                }
+            }
+            btnSave.setOnClickListener {
+
+                val recipe = RecipesEntity(
+                    etTitle.text.toString(),
+                    etDescription.text.toString(),
+                    recipeImgUri ?: Uri.parse("android.resource://your.package.here/drawable/ic_launcher_foreground") ,
+                    recipeId
+                )
+                viewModel.updateRecipe(recipe)
+                findNavController().popBackStack()
+            }
         }
     }
 
 
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RecipeDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecipeDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun isPermissionsGranted(): Boolean {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            ) ==
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
     }
+
 }

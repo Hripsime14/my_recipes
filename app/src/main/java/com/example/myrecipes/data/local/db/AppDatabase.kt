@@ -10,7 +10,7 @@ import com.example.myrecipes.data.model.entity.RecipesEntity
 
 @Database(
     entities = [RecipesEntity::class],
-    version = 1
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

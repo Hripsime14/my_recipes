@@ -12,6 +12,7 @@
         android:layout_width="@dimen/default_icon"
         android:layout_height="@dimen/default_icon"
         android:layout_margin="@dimen/default_margin"
+        android:scaleType="centerCrop"
         android:clickable="true"
         android:focusable="true"
         android:background="@color/grey_dark"

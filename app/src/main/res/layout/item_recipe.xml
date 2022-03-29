@@ -10,6 +10,7 @@
         android:layout_width="@dimen/mini_icon"
         android:layout_height="@dimen/mini_icon"
         android:layout_margin="@dimen/default_margin"
+        android:scaleType="centerCrop"
         android:background="@color/grey_dark"
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintTop_toTopOf="parent"

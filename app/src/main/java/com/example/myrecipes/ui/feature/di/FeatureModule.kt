@@ -12,10 +12,10 @@ val featureModule = module {
     }
 
     viewModel {
-        RecipeDetailsViewModel()
+        RecipeDetailsViewModel(get(), get(), get())
     }
 
     viewModel {
-        AddRecipeViewModel(get())
+        AddRecipeViewModel(addRecipeUseCase = get(), getInternalStorageImageUriUseCase = get())
     }
 }

@@ -15,6 +15,7 @@ import com.example.myrecipes.databinding.FragmentRecipesBinding
 import com.example.myrecipes.ui.common.BaseFragment
 import com.example.myrecipes.ui.feature.recipes.adapter.RecipesAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,13 +26,6 @@ class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
     private var recipesAdapter: RecipesAdapter? = null
     override val viewModel: RecipesViewModel by viewModel()
     private var list: List<RecipesEntity>? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,8 +50,16 @@ class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
         fac = view.findViewById(R.id.btnFAB)
     }
 
+
     private fun initRv() {
-        recipesAdapter = RecipesAdapter()
+        recipesAdapter = RecipesAdapter(
+            onItemClicked = {
+                val action = RecipesFragmentDirections.actionRecipesFragmentToRecipeDetailsFragment(it)
+                findNavController().navigate(action)
+            }, onItemLongClicked = {
+
+            }
+            )
         binding?.rvRecipes?.apply {
             adapter = recipesAdapter
             layoutManager = LinearLayoutManager(requireContext())
