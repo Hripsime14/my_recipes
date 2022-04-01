@@ -3,9 +3,7 @@ package com.example.myrecipes.ui.feature.recipedetails
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -21,6 +19,7 @@ import com.example.myrecipes.ui.extension.showDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class RecipeDetailsFragment : BaseFragment(R.layout.fragment_recipe_details) {
     override val viewModel: RecipeDetailsViewModel by viewModel()
