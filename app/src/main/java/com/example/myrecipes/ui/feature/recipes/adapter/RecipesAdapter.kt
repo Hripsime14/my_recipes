@@ -84,8 +84,8 @@ class RecipesAdapter(private val onItemClicked: (Int) -> Unit,
                 if (currentList.any { it.isSelected }) {
                     changeItemSelectionByPosition(currentList[adapterPosition])
                 } else {
-//                    //version 1 (lambda)
-//                    onItemClicked.invoke(currentList[adapterPosition].id)
+                    //version 1 (lambda)
+                    onItemClicked.invoke(currentList[adapterPosition].id)
 
 //                    //version 2 (channel)
 //                    coroutineScope?.launch {
@@ -93,10 +93,10 @@ class RecipesAdapter(private val onItemClicked: (Int) -> Unit,
 ////                        eventChannel.close()
 //                    }
 //
-                    //version 3 (flow)
-                    coroutineScope?.launch {
-                        _itemClickSharedFlow.emit(currentList[adapterPosition].id)
-                    }
+//                    //version 3 (flow)
+//                    coroutineScope?.launch {
+//                        _itemClickSharedFlow.emit(currentList[adapterPosition].id)
+//                    }
 
 //                    //version 4 (flow without scope)
 //                    _itemClickSharedFlow.tryEmit(currentList[adapterPosition].id)
@@ -108,8 +108,8 @@ class RecipesAdapter(private val onItemClicked: (Int) -> Unit,
                 val currentRecipe = currentList[adapterPosition]
                 changeItemSelectionByPosition(currentRecipe)
 
-//                //version 1 (lambda)
-//                onChangeMenuItemVisibility.invoke(currentList.any { it.isSelected })
+                //version 1 (lambda)
+                onChangeMenuItemVisibility.invoke(currentList.any { it.isSelected })
 
 //
 //                //version 2 (channel)
@@ -123,20 +123,6 @@ class RecipesAdapter(private val onItemClicked: (Int) -> Unit,
 //                    Log.d("testest", ": emited")
 //                    _visibilityChangeSharedFlow.emit(currentList.any { it.isSelected })
 //                }
-
-//                    _visibilityChangeSharedFlow.emit(currentList.any {
-//                        Log.d("testest", ": emited")
-//                        it.isSelected
-//                    })
-                    Log.d("testest", ": in the block")
-
-                        _visibilityChangeSharedFlow.onEach {
-                            currentList.any {
-                                Log.d("testest", ": emited")
-                                it.isSelected
-                            }
-                        }.flowOn(Dispatchers.IO)
-                            .launchIn(coroutineScope!!)
 
 //
 //                //version 4 (flow without scope)

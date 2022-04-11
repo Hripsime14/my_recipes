@@ -80,9 +80,9 @@ class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
         recipesAdapter = RecipesAdapter(
             //version 1 (lambda)
             onItemClicked = {id ->
-//                itemClickAction(id)
+                itemClickAction(id)
             }, onChangeMenuItemVisibility = {
-//                visibilityChangeAction(it)
+                visibilityChangeAction(it)
             }
         )
 
@@ -122,11 +122,11 @@ class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
 //
         //version 3 (flow), version 4 (flow without scope)
 
-        viewLifecycleOwner.lifecycleScope.launch{
-            recipesAdapter?.itemClickSharedFlow?.collect {
-                itemClickAction(it)
-            }
-        }
+//        viewLifecycleOwner.lifecycleScope.launch{
+//            recipesAdapter?.itemClickSharedFlow?.collect {
+//                itemClickAction(it)
+//            }
+//        }
 
 //        viewLifecycleOwner.lifecycleScope.launch {
 //            recipesAdapter?.visibilityChangeSharedFlow?.collect {
