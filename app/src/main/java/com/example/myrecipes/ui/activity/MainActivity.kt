@@ -21,8 +21,14 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding?.let { setContentView(it.root) }
         setNavController()
-
     }
+
+//    override fun onSupportNavigateUp(): Boolean = if (menu?.findItem(R.id.deleteId)?.isVisible == true) {
+//        recipesAdapter?.resetSelectedItems()
+//        true
+//    } else {
+//        findNavController().navigateUp()
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController?.navigateUp() == true || super.onSupportNavigateUp()

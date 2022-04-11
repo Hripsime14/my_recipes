@@ -2,6 +2,7 @@ package com.example.myrecipes.data.local.db.dao
 
 import androidx.room.*
 import com.example.myrecipes.data.local.RECIPE_TABLE_NAME
+import com.example.myrecipes.data.model.data.RecipeViewData
 import com.example.myrecipes.data.model.entity.RecipesEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -20,6 +21,10 @@ interface RecipeDao {
     @Update
     suspend fun updateRecipe(recipe: RecipesEntity)
 
+    @Query("DELETE FROM $RECIPE_TABLE_NAME WHERE id = :recipeId")
+    suspend fun deleteRecipeById(recipeId: Int)
 
+    @Delete
+    suspend fun deleteRecipes(vararg recipe: RecipesEntity)
 
 }

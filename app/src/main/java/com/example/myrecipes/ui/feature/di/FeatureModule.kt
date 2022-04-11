@@ -8,7 +8,7 @@ import org.koin.dsl.module
 
 val featureModule = module {
     viewModel {
-        RecipesViewModel(get())
+        RecipesViewModel(getRecipesUseCase = get(), deleteRecipeByIdUseCase = get(), deleteRecipesArrayUseCase = get())
     }
 
     viewModel {
