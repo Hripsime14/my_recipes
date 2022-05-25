@@ -11,9 +11,7 @@ import com.example.myrecipes.ui.common.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class RecipeDetailsViewModel(

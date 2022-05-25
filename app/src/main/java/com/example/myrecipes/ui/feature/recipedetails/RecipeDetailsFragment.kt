@@ -3,7 +3,9 @@ package com.example.myrecipes.ui.feature.recipedetails
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -16,6 +18,8 @@ import com.example.myrecipes.data.model.entity.RecipesEntity
 import com.example.myrecipes.databinding.FragmentRecipeDetailsBinding
 import com.example.myrecipes.ui.common.BaseFragment
 import com.example.myrecipes.ui.extension.showDialog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel

@@ -1,9 +1,11 @@
 package com.example.myrecipes.data.repository.di
 
 import com.example.myrecipes.data.repository.AddRecipeRepository
+import com.example.myrecipes.data.repository.LoadRecipesRepository
 import com.example.myrecipes.data.repository.RecipeDetailsRepository
 import com.example.myrecipes.data.repository.RecipesRepository
 import com.example.myrecipes.data.repository.repositoryimpl.AddRecipeRepositoryImpl
+import com.example.myrecipes.data.repository.repositoryimpl.LoadRecipesRepositoryImpl
 import com.example.myrecipes.data.repository.repositoryimpl.RecipeDetailsRepositoryImpl
 import com.example.myrecipes.data.repository.repositoryimpl.RecipesRepositoryImpl
 import org.koin.dsl.module
@@ -26,6 +28,13 @@ val repositoryModule = module {
         AddRecipeRepositoryImpl(
             localDataSource = get(),
             imageProviderManager = get()
+        )
+    }
+
+    factory<LoadRecipesRepository> {
+        LoadRecipesRepositoryImpl(
+            loadRecipesRemoteDataSource = get(),
+            loadRecipesLocalDataSource = get()
         )
     }
 }

@@ -1,17 +1,12 @@
 package com.example.myrecipes.ui.feature.recipes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myrecipes.R
 import com.example.myrecipes.data.model.data.RecipeViewData
-import com.example.myrecipes.data.model.entity.RecipesEntity
 import com.example.myrecipes.databinding.FragmentRecipesBinding
 import com.example.myrecipes.ui.common.BaseFragment
 import com.example.myrecipes.ui.feature.recipes.adapter.RecipesAdapter
@@ -22,7 +17,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
     private var binding: FragmentRecipesBinding? = null
-    private lateinit var fac: FloatingActionButton
+    private lateinit var facAdd: FloatingActionButton
+    private lateinit var facDownload: FloatingActionButton
     private var recipesAdapter: RecipesAdapter? = null
     override val viewModel: RecipesViewModel by viewModel()
     private var list: List<RecipeViewData>? = null
@@ -73,7 +69,8 @@ class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
     }
 
     private fun setViews(view: View) {
-        fac = view.findViewById(R.id.btnFAB)
+        facAdd = view.findViewById(R.id.btnFABAdd)
+        facDownload = view.findViewById(R.id.btnFABADownload)
     }
 
     private fun initRv() {
@@ -129,18 +126,16 @@ class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
 //        }
 
 //        viewLifecycleOwner.lifecycleScope.launch {
-//            recipesAdapter?.visibilityChangeSharedFlow?.collect {
-//                Log.d("testest", ": called, it = " + it)
-//
+//            recipesAdapter?.visibilityChangeSharedFlow?.collect { //
 //                visibilityChangeAction(it)
 //            }
 //        }
         viewLifecycleOwner.lifecycleScope.launch {
             recipesAdapter?.visibilityChangeSharedFlow?.onEach {
-                Log.d("testest", ": called, it = " + it)
                 visibilityChangeAction(it)
             }?.launchIn(viewLifecycleOwner.lifecycleScope)
         }
+
     }
 
     private fun itemClickAction(id: Int) {
@@ -152,8 +147,12 @@ class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
     }
 
     private fun setListeners() {
-        fac.setOnClickListener {
+        facAdd.setOnClickListener {
             val action = RecipesFragmentDirections.actionRecipesFragmentToAddRecipeFragment()
+            findNavController().navigate(action)
+        }
+        facDownload.setOnClickListener {
+            val action = RecipesFragmentDirections.actionRecipesFragmentToLoadedRecipesFragment()
             findNavController().navigate(action)
         }
     }

@@ -13,5 +13,7 @@ val domainModule = module {
     factory<GetInternalStorageImageUriUseCase> { GetInternalStorageImageUriUseCaseImpl(recipeDetailsRepository   = get()) }
     factory<DeleteRecipeByIdUseCase> { DeleteRecipeByIdUseCaseImpl(recipesRepository = get()) }
     factory<DeleteRecipesArrayUseCase> { DeleteRecipesArrayUseCaseImpl(recipesRepository = get()) }
+    factory<LoadRecipesUseCase> { LoadRecipesUseCaseImpl(loadRecipesRepository = get()) }
+    factory<AddRecipesListUseCase> { AddRecipesListUseCaseImpl(loadRecipesRepository =  get()) }
     single { ImageProviderManager(get()) }
 }

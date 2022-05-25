@@ -12,5 +12,4 @@ class AddRecipeRepositoryImpl(
 ): AddRecipeRepository {
     override suspend fun addRecipe(recipe: RecipesEntity) = localDataSource.addRecipe(recipe)
     override suspend fun getImageUriFromInternalStorage(externalUri: Uri): Uri? = imageProviderManager.getInternalStorageImageUri(externalUri)
-
 }

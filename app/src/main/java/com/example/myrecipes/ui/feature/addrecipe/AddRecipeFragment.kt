@@ -24,6 +24,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myrecipes.R
+import com.example.myrecipes.data.getDefaultUri
 import com.example.myrecipes.data.model.entity.RecipesEntity
 import com.example.myrecipes.databinding.FragmentAddRecipeBinding
 import com.example.myrecipes.ui.common.BaseFragment
@@ -113,7 +114,7 @@ class AddRecipeFragment : BaseFragment(R.layout.fragment_add_recipe) {
                 val title = etTitle.text.toString()
                 val description = etDescription.text.toString()
 
-                val defUri = Uri.parse("android.resource://com.example.myrecipes/drawable-v24/ic_launcher_foreground.xml")
+                val defUri = getDefaultUri()
 
                 val currentRecipe = RecipesEntity(title, description, imageRecipeUri?: defUri)
                 saveRecipe(currentRecipe)

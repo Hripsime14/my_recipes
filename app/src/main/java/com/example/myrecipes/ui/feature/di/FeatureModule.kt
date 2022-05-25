@@ -1,6 +1,7 @@
 package com.example.myrecipes.ui.feature.di
 
 import com.example.myrecipes.ui.feature.addrecipe.AddRecipeViewModel
+import com.example.myrecipes.ui.feature.loadedrecipes.LoadedRecipesViewModel
 import com.example.myrecipes.ui.feature.recipedetails.RecipeDetailsViewModel
 import com.example.myrecipes.ui.feature.recipes.RecipesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -17,5 +18,9 @@ val featureModule = module {
 
     viewModel {
         AddRecipeViewModel(addRecipeUseCase = get(), getInternalStorageImageUriUseCase = get())
+    }
+
+    viewModel {
+        LoadedRecipesViewModel(loadRecipesUseCase = get(), addRecipesListUseCase = get())
     }
 }

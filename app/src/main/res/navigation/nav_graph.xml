@@ -23,10 +23,18 @@
         <action
             android:id="@+id/action_recipesFragment_to_recipeDetailsFragment"
             app:destination="@id/recipeDetailsFragment" />
+        <action
+            android:id="@+id/action_recipesFragment_to_loadedRecipesFragment"
+            app:destination="@id/loadedRecipesFragment" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeFragment"
         android:name="com.example.myrecipes.ui.feature.addrecipe.AddRecipeFragment"
         android:label="Add Recipe"
         tools:layout="@layout/fragment_add_recipe" />
+    <fragment
+        android:id="@+id/loadedRecipesFragment"
+        android:name="com.example.myrecipes.ui.feature.loadedrecipes.LoadedRecipesFragment"
+        android:label="Loaded Recipes"
+        tools:layout="@layout/fragment_loaded_recipes" />
 </navigation>

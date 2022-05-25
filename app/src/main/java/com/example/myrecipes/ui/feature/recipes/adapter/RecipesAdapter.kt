@@ -1,6 +1,5 @@
 package com.example.myrecipes.ui.feature.recipes.adapter
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,21 +7,17 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myrecipes.data.local.db.dao.RecipeDao
+import com.bumptech.glide.Glide
 import com.example.myrecipes.data.model.data.RecipeViewData
-import com.example.myrecipes.data.model.entity.RecipesEntity
 
 import com.example.myrecipes.databinding.ItemRecipeBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.*
-import java.util.concurrent.Flow
-import kotlin.coroutines.coroutineContext
 
 class RecipesAdapter(private val onItemClicked: (Int) -> Unit,
-                    private val onChangeMenuItemVisibility: (Boolean) -> Unit, )
+                    private val onChangeMenuItemVisibility: (Boolean) -> Unit)
     :ListAdapter<RecipeViewData, RecipesAdapter.ViewHolder>(DiffCallback()) {
 
     private val eventChannel = Channel<Int> {}
