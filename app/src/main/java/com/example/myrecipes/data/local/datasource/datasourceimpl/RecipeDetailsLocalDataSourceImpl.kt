@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.Flow
 class RecipeDetailsLocalDataSourceImpl(
     private val recipeDao: RecipeDao
 ): RecipeDetailsLocalDataSource {
-    override suspend fun getRecipeById(recipeId: Int): RecipesEntity? = recipeDao.getRecipeById(recipeId)
+    override suspend fun getRecipeById(recipeId: String): RecipesEntity? = recipeDao.getRecipeById(recipeId)
     override suspend fun updateRecipe(recipe: RecipesEntity) = recipeDao.updateRecipe(recipe)
 }

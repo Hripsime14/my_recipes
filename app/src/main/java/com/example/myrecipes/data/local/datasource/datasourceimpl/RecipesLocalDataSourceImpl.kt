@@ -10,6 +10,6 @@ class RecipesLocalDataSourceImpl(
     private val recipeDao: RecipeDao
 ): RecipesLocalDataSource {
     override fun getAllRecipes(): Flow<List<RecipesEntity>> = recipeDao.getAllRecipes()
-    override suspend fun deleteRecipeById(recipeId: Int) = recipeDao.deleteRecipeById(recipeId)
+    override suspend fun deleteRecipeById(recipeId: String) = recipeDao.deleteRecipeById(recipeId)
     override suspend fun deleteRecipes(recipes: Array<RecipesEntity>) = recipeDao.deleteRecipes(*recipes)
 }

@@ -1,8 +1,11 @@
 package com.example.myrecipes.data.model.data
 
+import android.net.Uri
+
 data class LoadedRecipesData(
-    val showId: Int?,
-    val name: String?,
-    val thumbnailUrl: String?,
-    val description: String?
+    val id: String,
+    val title: String?,
+    val imageUri: Uri,
+    val description: String?,
+    var isSelected: Boolean = false
 )

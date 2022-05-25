@@ -3,14 +3,12 @@ package com.example.myrecipes.ui.feature.recipedetails
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.example.myrecipes.data.model.entity.RecipesEntity
-import com.example.myrecipes.domain.manager.ImageProviderManager
 import com.example.myrecipes.domain.usecase.GetInternalStorageImageUriUseCase
 import com.example.myrecipes.domain.usecase.GetRecipeByIdUseCase
 import com.example.myrecipes.domain.usecase.UpdateRecipeUseCase
 import com.example.myrecipes.ui.common.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -32,7 +30,7 @@ class RecipeDetailsViewModel(
     val externalStorageUriSharedFlow = _externalStorageUriSharedFlow.asSharedFlow()
 
 
-    fun getRecipeById(recipeId: Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun getRecipeById(recipeId: String) = viewModelScope.launch(Dispatchers.IO) {
         _recipeSharedFlow.emitAll(getRecipeByIdUseCase(recipeId))
     }
 

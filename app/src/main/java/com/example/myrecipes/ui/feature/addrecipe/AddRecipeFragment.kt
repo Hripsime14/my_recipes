@@ -32,6 +32,7 @@ import com.example.myrecipes.ui.extension.showDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 const val MIMETYPE_IMAGE = "image/*"
 
@@ -116,7 +117,7 @@ class AddRecipeFragment : BaseFragment(R.layout.fragment_add_recipe) {
 
                 val defUri = getDefaultUri()
 
-                val currentRecipe = RecipesEntity(title, description, imageRecipeUri?: defUri)
+                val currentRecipe = RecipesEntity(title, description, imageRecipeUri?: defUri, id = UUID.randomUUID().toString())
                 saveRecipe(currentRecipe)
             }
 

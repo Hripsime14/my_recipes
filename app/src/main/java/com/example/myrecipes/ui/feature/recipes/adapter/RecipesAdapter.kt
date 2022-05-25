@@ -3,11 +3,13 @@ package com.example.myrecipes.ui.feature.recipes.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.myrecipes.data.model.data.LoadedRecipesData
 import com.example.myrecipes.data.model.data.RecipeViewData
 
 import com.example.myrecipes.databinding.ItemRecipeBinding
@@ -16,7 +18,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 
-class RecipesAdapter(private val onItemClicked: (Int) -> Unit,
+class RecipesAdapter(private val onItemClicked: (String) -> Unit,
                     private val onChangeMenuItemVisibility: (Boolean) -> Unit)
     :ListAdapter<RecipeViewData, RecipesAdapter.ViewHolder>(DiffCallback()) {
 
@@ -131,8 +133,6 @@ class RecipesAdapter(private val onItemClicked: (Int) -> Unit,
         }
 
         private fun changeItemSelectionByPosition(currentRecipe: RecipeViewData) {
-            Log.d("testest", ": updated")
-
             currentRecipe.isSelected = !currentRecipe.isSelected
             notifyItemChanged(adapterPosition)
         }
@@ -141,7 +141,13 @@ class RecipesAdapter(private val onItemClicked: (Int) -> Unit,
             itemView.apply {
                 tvRecipeTitle.text = recipeViewData.title
                 tvRecipeDescription.text = recipeViewData.description
-                imgRecipeIcon.setImageURI(recipeViewData.imageUri)
+                recipeViewData.imageUri.let {
+                    if (it.toString().contains("http")) {
+                        Glide.with(itemView.context).load(it).into(imgRecipeIcon)
+                    } else {
+                        imgRecipeIcon.setImageURI(it)
+                    }
+                }
                 vwBackground.isVisible = recipeViewData.isSelected
             }
         }

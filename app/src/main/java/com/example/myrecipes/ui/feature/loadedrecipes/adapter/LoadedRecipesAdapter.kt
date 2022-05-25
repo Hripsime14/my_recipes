@@ -16,12 +16,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myrecipes.R
+import com.example.myrecipes.data.model.data.LoadedRecipesData
 import com.example.myrecipes.data.model.data.RecipeViewData
 import com.example.myrecipes.databinding.ItemRecipe2Binding
 
 
 class LoadedRecipesAdapter(private val changeMenuItemVisibility: (Boolean) -> Unit)
-    : ListAdapter<RecipeViewData, LoadedRecipesAdapter.ViewHolder>(DiffCallback()) {
+    : ListAdapter<LoadedRecipesData, LoadedRecipesAdapter.ViewHolder>(DiffCallback()) {
     private var selectedNumbers: Int = 0
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -62,7 +63,7 @@ class LoadedRecipesAdapter(private val changeMenuItemVisibility: (Boolean) -> Un
             }
         }
 
-        private fun changeBackgroundColor(isLongClicked: Boolean, item: RecipeViewData) {
+        private fun changeBackgroundColor(isLongClicked: Boolean, item: LoadedRecipesData) {
             val currentBackground = itemView.findViewById<View>(R.id.vwBackground2)
             Log.d("gggggggg", "changeBackgroundColor: visibility is ${currentBackground.visibility == View.VISIBLE}")
             if (currentBackground.visibility == View.VISIBLE) {
@@ -88,10 +89,10 @@ class LoadedRecipesAdapter(private val changeMenuItemVisibility: (Boolean) -> Un
             notifyItemChanged(adapterPosition)
         }
 
-        fun bind(recipeViewData: RecipeViewData) = with(itemRecipeBinding){
+        fun bind(recipeViewData: LoadedRecipesData) = with(itemRecipeBinding){
             itemView.apply {
                 tvRecipeTitle.text = recipeViewData.title
-                tvRecipeDescription.text = showLinksInString(recipeViewData.description)
+                tvRecipeDescription.text = recipeViewData.description?.let { showLinksInString(it) }
                 makeLinksClickable(tvRecipeDescription)
                 Log.d("gggggggg", "bind: $selectedNumbers , isk ${recipeViewData.isSelected}")
                 vwBackground2.isVisible = recipeViewData.isSelected
@@ -99,7 +100,7 @@ class LoadedRecipesAdapter(private val changeMenuItemVisibility: (Boolean) -> Un
             }
         }
 
-        private fun loadImage(recipeViewData: RecipeViewData, imgRecipeIcon: ImageView) {
+        private fun loadImage(recipeViewData: LoadedRecipesData, imgRecipeIcon: ImageView) {
             Glide.with(itemView.context).load(recipeViewData.imageUri).into(imgRecipeIcon)
         }
 
@@ -116,11 +117,11 @@ class LoadedRecipesAdapter(private val changeMenuItemVisibility: (Boolean) -> Un
         }
     }
 
-    class DiffCallback: DiffUtil.ItemCallback<RecipeViewData>() {
-        override fun areItemsTheSame(oldItem: RecipeViewData, newItem: RecipeViewData): Boolean =
+    class DiffCallback: DiffUtil.ItemCallback<LoadedRecipesData>() {
+        override fun areItemsTheSame(oldItem: LoadedRecipesData, newItem: LoadedRecipesData): Boolean =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: RecipeViewData, newItem: RecipeViewData): Boolean =
+        override fun areContentsTheSame(oldItem: LoadedRecipesData, newItem: LoadedRecipesData): Boolean =
             oldItem.hashCode() == newItem.hashCode()
 
     }

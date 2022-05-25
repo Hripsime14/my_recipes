@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipesLocalDataSource {
     fun getAllRecipes(): Flow<List<RecipesEntity>>
-    suspend fun deleteRecipeById(recipeId: Int)
-    suspend fun deleteRecipes(recipeId: Array<RecipesEntity>)
+    suspend fun deleteRecipeById(recipeId: String)
+    suspend fun deleteRecipes(recipes: Array<RecipesEntity>)
 }

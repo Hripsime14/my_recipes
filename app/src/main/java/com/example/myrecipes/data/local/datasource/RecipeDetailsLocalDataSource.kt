@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipeDetailsLocalDataSource {
 
-    suspend fun getRecipeById(recipeId: Int): RecipesEntity?
+    suspend fun getRecipeById(recipeId: String): RecipesEntity?
 
     suspend fun updateRecipe(recipe: RecipesEntity)
 }

@@ -10,6 +10,6 @@ data class RecipesEntity(
     val title: String,
     val description: String,
     val imageUri: Uri,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0
-)
+    @PrimaryKey
+    val id: String
+    )

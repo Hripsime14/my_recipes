@@ -90,7 +90,7 @@ class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
         }
     }
 
-    private fun navigateToDetailScreen(id: Int) {
+    private fun navigateToDetailScreen(id: String) {
         val action = RecipesFragmentDirections.actionRecipesFragmentToRecipeDetailsFragment(id)
         findNavController().navigate(action)
     }
@@ -135,10 +135,9 @@ class RecipesFragment : BaseFragment(R.layout.fragment_recipes) {
                 visibilityChangeAction(it)
             }?.launchIn(viewLifecycleOwner.lifecycleScope)
         }
-
     }
 
-    private fun itemClickAction(id: Int) {
+    private fun itemClickAction(id: String) {
         navigateToDetailScreen(id)
     }
 

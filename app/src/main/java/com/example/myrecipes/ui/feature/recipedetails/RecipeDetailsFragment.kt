@@ -13,6 +13,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.myrecipes.R
 import com.example.myrecipes.data.model.entity.RecipesEntity
 import com.example.myrecipes.databinding.FragmentRecipeDetailsBinding
@@ -23,6 +24,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 
 class RecipeDetailsFragment : BaseFragment(R.layout.fragment_recipe_details) {
@@ -30,7 +32,7 @@ class RecipeDetailsFragment : BaseFragment(R.layout.fragment_recipe_details) {
     private var binding: FragmentRecipeDetailsBinding? = null
     private val args: RecipeDetailsFragmentArgs by navArgs()
     private var recipeImgUri: Uri? = null
-    private var recipeId: Int = -1
+    private var recipeId: String? = null
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -51,7 +53,7 @@ class RecipeDetailsFragment : BaseFragment(R.layout.fragment_recipe_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recipeId = args.recipeId
-        viewModel.getRecipeById(recipeId)
+        viewModel.getRecipeById(recipeId!!)
         observeForCurrentRecipe()
         observeForExternalStorageImageUri()
         setListeners()
@@ -67,7 +69,13 @@ class RecipeDetailsFragment : BaseFragment(R.layout.fragment_recipe_details) {
                             recipeImgUri = recipeEntity.imageUri
                             etDescription.setText(recipeEntity.description)
                             etTitle.setText(recipeEntity.title)
-                            imgRecipe.setImageURI(recipeImgUri)
+                            recipeImgUri?.let {
+                                if (it.toString().contains("http")) {
+                                    Glide.with(requireContext()).load(recipeImgUri).into(imgRecipe)
+                                } else {
+                                    imgRecipe.setImageURI(recipeImgUri)
+                                }
+                            }
                         }
                     }
                 }
@@ -104,7 +112,7 @@ class RecipeDetailsFragment : BaseFragment(R.layout.fragment_recipe_details) {
                     etTitle.text.toString(),
                     etDescription.text.toString(),
                     recipeImgUri ?: Uri.parse("android.resource://your.package.here/drawable/ic_launcher_foreground") ,
-                    recipeId
+                    UUID.randomUUID().toString()
                 )
                 viewModel.updateRecipe(recipe)
                 findNavController().popBackStack()

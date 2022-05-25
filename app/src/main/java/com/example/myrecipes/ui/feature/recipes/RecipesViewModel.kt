@@ -17,7 +17,7 @@ class RecipesViewModel(
 
     fun getAllRecipes() = getRecipesUseCase()
 
-    fun deleteRecipeById(recipeId: Int) {
+    fun deleteRecipeById(recipeId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             deleteRecipeByIdUseCase(recipeId)
         }

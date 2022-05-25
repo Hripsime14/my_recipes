@@ -12,7 +12,7 @@ class RecipeDetailsRepositoryImpl(
     private val localDataSource: RecipeDetailsLocalDataSource,
     private val imageProviderManager: ImageProviderManager
 ): RecipeDetailsRepository {
-    override fun getRecipeById(recipeId: Int): Flow<RecipesEntity> = flow{
+    override fun getRecipeById(recipeId: String): Flow<RecipesEntity> = flow{
         val recipe = localDataSource.getRecipeById(recipeId)
         if (recipe != null) {
             emit(recipe)
